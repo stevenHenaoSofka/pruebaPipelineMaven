@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+pipeline:
+  agent:
+    none:
+  stages:
+    - stage: TestBack
+      steps:
+
+
+        - task: Gradle@1
+          displayName: 'gradlew test  --tests=OperacionTest'
+          inputs:
+            gradleWrapperFile: '$(System.DefaultWorkingDirectory)/gradlew'
+            tasks: 'clean test --tests=OperacionTest --info'
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            testResultsFiles: '**/TEST-*.xml'
+
+
+        - task: PublishPipelineArtifact@1
+          displayName: 'Publish Pipeline Artifact'
+          inputs:
+            targetPath: '$(System.DefaultWorkingDirectory)/build/reports/tests/test'
+            artifact: AccountEvidences
+          continueOnError: true
+          condition: always()
+
+
