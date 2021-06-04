@@ -3,32 +3,19 @@ pipeline {
     stages {
         stage('checkout-git'){
             steps{
-                git poll: true, url: 'https://github.com/stevenHenaoSofka/pruebaPipeline.git'
+                git poll: true, url: 'https://github.com/stevenHenaoSofka/pruebaPipelineMaven.git'
             }
         }
-        stage('Test') {
+        stage ('Build') {
             steps {
-                sh './gradlew clean build'
+                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+            }
+            post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml' 
+                }
             }
         }
-    }
-    post {
-           success {
-               // Archive the built artifacts
-               archive includes: 'pkg/*.gem'
-           }
-           always {
-               // publish html
-               publishHTML([
-                   allowMissing: false,
-                   alwaysLinkToLastBuild: false,
-                   keepAll: false,
-                   reportDir: 'build/jacocoHtml',
-                   reportFiles: 'index.html',
-                   reportName: 'HTML Report',
-                   reportTitles: ''
-                   ])
-           }
     }
 
 
