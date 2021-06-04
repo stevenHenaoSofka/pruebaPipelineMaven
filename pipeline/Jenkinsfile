@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('checkout-git'){
+            steps{
+                git poll: true, url: 'https://github.com/stevenHenaoSofka/pruebaPipeline.git'
+            }
+        }
         stage('Test') {
             steps {
                 sh './gradlew clean build'
