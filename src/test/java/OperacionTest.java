@@ -21,7 +21,7 @@ public class OperacionTest {
         //Act
         int resultado = Operacion.sumarLosValores(x,y);
         //Assert
-        Assert.assertEquals(9,resultado);
+        Assert.assertEquals(8,resultado);
     }
 
     @Test
