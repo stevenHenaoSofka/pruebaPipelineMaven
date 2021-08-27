@@ -11,7 +11,7 @@ public class OperacionTest {
         //Act
         //Assert
         
-        //pruebs
+        //prueba
     }
 
     @Test
