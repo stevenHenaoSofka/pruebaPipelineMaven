@@ -2,7 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class OperacionTest {
-#prueba
+
     @Test(expected = IllegalStateException.class)
     public void debeRetornarErrorCuandoIntentaAccederAlConstructor() throws IllegalStateException
     {
