@@ -13,7 +13,7 @@ pipeline {
                         sh "mvn sonar:sonar"
                     }   
                     timeout(time: 1, unit: 'HOURS') {
-                        def qg - waitForQualityGate()
+                        def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
                             error "Pipeline aborted due to sonar Qube task: ${qg.status}"
                         }
