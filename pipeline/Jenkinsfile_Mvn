@@ -15,6 +15,7 @@ pipeline {
                 '-Dsonar.password=***** ' +
                 '-Dsonar.sources=. ' +
                 '-Dsonar.exclusions=**/lib/**'
+            }
         }
         stage ('Build') {
             steps {
