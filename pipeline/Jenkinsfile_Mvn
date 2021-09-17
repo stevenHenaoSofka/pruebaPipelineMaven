@@ -6,17 +6,6 @@ pipeline {
                 git poll: true, url: 'https://github.com/stevenHenaoSofka/pruebaPipelineMaven.git'
             }
         }
-        stage('SonarQube analysis') {
-            def scannerHome = tool 'SonarQubeScanner';
-            withSonarQubeEnv('SonarQube') { 
-                sh "${scannerHome}/bin/sonar-scanner " +
-                '-Dsonar.projectKey=jobadmin-pipeline:master ' +
-                '-Dsonar.login=creds ' +
-                '-Dsonar.password=***** ' +
-                '-Dsonar.sources=. ' +
-                '-Dsonar.exclusions=**/lib/**'
-            }
-        }
         stage ('Build') {
             steps {
                 sh 'mvn -Dmaven.test.failure.ignore=true install' 
