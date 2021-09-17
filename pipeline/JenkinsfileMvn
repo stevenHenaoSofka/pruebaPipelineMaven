@@ -7,15 +7,21 @@ pipeline {
             }
         }
         stage('SonarQube analysis') {
-            def scannerHome = tool 'SonarQubeScanner';
-            withSonarQubeEnv('SonarQube') { 
-                sh "${scannerHome}/bin/sonar-scanner " +
-                '-Dsonar.projectKey=jobadmin-pipeline:master ' +
-                '-Dsonar.login=creds ' +
-                '-Dsonar.password=***** ' +
-                '-Dsonar.sources=. ' +
-                '-Dsonar.exclusions=**/lib/**'
+            steps{
+                script{
+                    withSonarQubeEnv('sonaQube') {
+                        sh "mvn sonar:sonar"
+                    }   
+                    timeout(time: 1, unit: 'HOURS') {
+                        def qg - waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to sonar Qube task: ${qg.status}"
+                        }
+                    }
+                    sh "mvn clean install"
+                }
             }
+          
         }
         stage ('Build') {
             steps {
